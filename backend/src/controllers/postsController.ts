@@ -42,6 +42,18 @@ class PostsController {
 
     return response.json(post);
   }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.body;
+
+    const post = await knex("posts").where("id", id).del();
+
+    if (!post) {
+      return response.status(400).json({ message: "Post not found!" });
+    }
+
+    return response.json(post);
+  }
 }
 
 export default PostsController;
