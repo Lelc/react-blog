@@ -52,37 +52,39 @@ const EditPost = () => {
   return (
     <>
       <Header />
-      <h1>Edit Post</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">
-          <span>Title:</span>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-          ></input>
-        </label>
-        <label htmlFor="image">
-          <span>Image:</span>
-          <input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleInputChange}
-          ></input>
-        </label>
-        <label htmlFor="message">
-          <span>Content:</span>
-          <textarea
-            value={postContent}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
-              setPostContent(e.target.value)
-            }
-          />
-        </label>
-        <button>Edit</button>
-      </form>
+      <div className="container">
+        <h1>Edit Post</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="title">
+            <span>Title:</span>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label htmlFor="image">
+            <span>Image:</span>
+            <input
+              type="text"
+              name="image"
+              value={formData.image}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label htmlFor="message">
+            <span>Content:</span>
+            <textarea
+              value={postContent}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
+                setPostContent(e.target.value)
+              }
+            />
+          </label>
+          <button>Edit</button>
+        </form>
+      </div>
     </>
   );
 };

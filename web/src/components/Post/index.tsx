@@ -12,8 +12,8 @@ interface Props {
 const Post: React.FC<Props> = ({ post }) => {
   return (
     <>
+      <img src={post.image} alt={post.title} />
       <h3>{post.title}</h3>
-      <p>{post.image}</p>
       <div>{post.content}</div>
     </>
   );

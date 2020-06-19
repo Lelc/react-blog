@@ -41,26 +41,36 @@ const CreatePost = () => {
   return (
     <>
       <Header />
-      <h1>Create Post</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">
-          <span>Title:</span>
-          <input type="text" name="title" onChange={handleInputChange}></input>
-        </label>
-        <label htmlFor="image">
-          <span>Image:</span>
-          <input type="text" name="image" onChange={handleInputChange}></input>
-        </label>
-        <label htmlFor="message">
-          <span>Content:</span>
-          <textarea
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
-              setPostContent(e.target.value)
-            }
-          />
-        </label>
-        <button>Create</button>
-      </form>
+      <div className="container">
+        <h1>Create Post</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="title">
+            <span>Title:</span>
+            <input
+              type="text"
+              name="title"
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label htmlFor="image">
+            <span>Image:</span>
+            <input
+              type="text"
+              name="image"
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label htmlFor="message">
+            <span>Content:</span>
+            <textarea
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
+                setPostContent(e.target.value)
+              }
+            />
+          </label>
+          <button>Create</button>
+        </form>
+      </div>
     </>
   );
 };

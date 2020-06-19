@@ -1,9 +1,66 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+section {
+  width: 55vw;
+  margin: 20px 20px 0;
+  padding: 0 20px 20px;
+  border-bottom: 2px dashed #ccc;
+}
+section:last-of-type {
+  border: none;
+}
+section h3 {
+  margin-top: 0;
+}
+section .btns {
+  display: flex;
+  justify-content: flex-end;
+}
+
+section .btns a,
+section .btns button {
+  background: #fe6760;
+  border: 2px solid #fe6760;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 10px;
+  width: 80px;
   text-align: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+section .btns a {
+  border-color: #769cc9;
+  background: #769cc9;
+}
+section .btns a:hover {
+  color: #769cc9;
+  background: #fff;
+}
+section .btns button:hover {
+  color: #fe6760;
+  background: #fff;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
 }
 
 .App-logo {
   pointer-events: none;
+  width: 100px;
+  margin: 20px 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,13 +71,25 @@
 
 .App-header {
   background-color: #282c34;
-  height: 10vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-header .logo {
+  display: flex;
+  align-items: center;
+}
+.App-header .logo p {
+  color: #61dafb;
+}
+
+.App-header nav a {
+  color: #fff;
+  margin: 10px 20px;
+  font-size: calc(5px + 2vmin);
 }
 
 .App-link {
@@ -34,4 +103,47 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 40%;
+}
+form label,
+form input,
+form textarea {
+  width: 100%;
+}
+form label {
+  margin-bottom: 20px;
+}
+form label span {
+  margin: 5px;
+  display: block;
+}
+form input,
+form textarea {
+  border: 2px solid #999;
+  border-radius: 5px;
+  padding: 8px 10px;
+}
+
+form button {
+  background: #9ad787;
+  border: 2px solid #9ad787;
+  border-radius: 5px;
+  padding: 10px 15px;
+  width: 90px;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+form button:hover {
+  color: #9ad787;
+  background: #fff;
+  cursor: pointer;
 }

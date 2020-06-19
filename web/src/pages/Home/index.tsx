@@ -30,15 +30,19 @@ const Home = () => {
   return (
     <>
       <Header />
-      <h1>Home</h1>
-      <Link to="/create-post">Create Post</Link>
-      {posts.map((post) => (
-        <section key={post.id}>
-          <Post key={post.id} post={post} />
-          <Link to={`/edit-post/${post.id}`}>Edit</Link>
-          <button onClick={() => handleButtonDelete(post.id)}>Delete</button>
-        </section>
-      ))}
+      <div className="container">
+        {posts.map((post) => (
+          <section key={post.id}>
+            <Post key={post.id} post={post} />
+            <div className="btns">
+              <Link to={`/edit-post/${post.id}`}>Edit</Link>
+              <button onClick={() => handleButtonDelete(post.id)}>
+                Delete
+              </button>
+            </div>
+          </section>
+        ))}
+      </div>
     </>
   );
 };
