@@ -35,6 +35,7 @@ const Home = () => {
       {posts.map((post) => (
         <section key={post.id}>
           <Post key={post.id} post={post} />
+          <Link to={`/edit-post/${post.id}`}>Edit</Link>
           <button onClick={() => handleButtonDelete(post.id)}>Delete</button>
         </section>
       ))}

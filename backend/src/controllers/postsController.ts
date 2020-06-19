@@ -43,6 +43,21 @@ class PostsController {
     return response.json(post);
   }
 
+  async edit(request: Request, response: Response) {
+    const { id } = request.params;
+    const { title, image, content } = request.body;
+
+    const post = {
+      title,
+      image,
+      content,
+    };
+
+    await knex("posts").where("id", id).update(post);
+
+    return response.json(post);
+  }
+
   async delete(request: Request, response: Response) {
     const { id } = request.body;
 
