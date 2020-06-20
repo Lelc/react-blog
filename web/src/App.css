@@ -10,7 +10,7 @@
   justify-content: center;
 }
 section {
-  width: 55vw;
+  width: 40vw;
   margin: 20px 20px 0;
   padding: 0 20px 20px;
   border-bottom: 2px dashed #ccc;
@@ -20,6 +20,9 @@ section:last-of-type {
 }
 section h3 {
   margin-top: 0;
+}
+section img {
+  max-width: 100%;
 }
 section .btns {
   display: flex;
@@ -146,4 +149,21 @@ form button:hover {
   color: #9ad787;
   background: #fff;
   cursor: pointer;
+}
+
+.imgs-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  width: 40vw;
+  align-items: center;
+  justify-content: center;
+}
+.imgs-gallery .pic-image {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  overflow: hidden;
+}
+.imgs-gallery .pic-image img {
+  max-width: 100%;
 }
