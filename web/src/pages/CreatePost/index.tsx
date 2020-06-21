@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import TextareaAutosize from "react-textarea-autosize";
 import api from "../../services/api";
 import axios from "axios";
 
@@ -16,10 +17,8 @@ interface Image {
 const CreatePost = () => {
   const history = useHistory();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    image: "",
-  });
+  const [postImage, setPostImage] = useState<string>("");
+  const [postTitle, setPostTitle] = useState<string>("");
   const [postContent, setPostContent] = useState<string>("");
   const [chooseImages, setChooseImages] = useState<string>("");
   const [images, setImages] = useState<Image[]>([]);
@@ -35,20 +34,15 @@ const CreatePost = () => {
       });
   }, [chooseImages]);
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-
-    setFormData({ ...formData, [name]: value });
-  }
-
   function handleImagePic(src: string) {
-    setFormData({ ...formData, image: src });
+    setPostImage(src);
   }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    const { title, image } = formData;
+    const image = postImage;
+    const title = postTitle;
     const content = postContent;
 
     const data = {
@@ -70,25 +64,15 @@ const CreatePost = () => {
       <div className="container">
         <h1>Create Post</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="title">
-            <span>Title:</span>
-            <input
-              type="text"
-              name="title"
-              onChange={handleInputChange}
-            ></input>
-          </label>
-          <label htmlFor="image">
-            <span>Image:</span>
-            <input
-              type="text"
-              name="image"
-              value={chooseImages}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                setChooseImages(e.target.value)
-              }
-            ></input>
-          </label>
+          <input
+            type="text"
+            name="image"
+            value={chooseImages}
+            placeholder="Search for an Image"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+              setChooseImages(e.target.value)
+            }
+          ></input>
           <div className="imgs-gallery">
             {images.map((image) => (
               <div
@@ -96,23 +80,34 @@ const CreatePost = () => {
                 key={image.id}
                 onClick={() => handleImagePic(image.urls.regular)}
               >
-                <img src={image.urls.regular} />
+                <img src={image.urls.regular} alt="" />
               </div>
             ))}
           </div>
           <input
             type="hidden"
             name="image"
-            onChange={handleInputChange}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+              setPostImage(e.target.value)
+            }
           ></input>
-          <label htmlFor="message">
-            <span>Content:</span>
-            <textarea
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
-                setPostContent(e.target.value)
-              }
-            />
-          </label>
+          <img src={postImage} alt="" />
+          <TextareaAutosize
+            name="title"
+            placeholder="Title"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
+              setPostTitle(e.target.value)
+            }
+            autoFocus
+          />
+          <TextareaAutosize
+            placeholder="Content"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
+              setPostContent(e.target.value)
+            }
+            minRows={5}
+            autoFocus
+          />
           <button>Create</button>
         </form>
       </div>

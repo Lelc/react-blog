@@ -1,17 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Noto Sans JP", sans-serif;
 }
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 40vw;
+  margin: 0 auto;
+  padding: 20px 40px;
 }
 section {
-  width: 40vw;
-  margin: 20px 20px 0;
+  width: 100%;
+  margin-top: 20px;
   padding: 0 20px 20px;
   border-bottom: 2px dashed #ccc;
 }
@@ -20,9 +33,14 @@ section:last-of-type {
 }
 section h3 {
   margin-top: 0;
+  font-size: 34px;
 }
 section img {
   max-width: 100%;
+}
+section div {
+  white-space: pre-line;
+  font-size: 21px;
 }
 section .btns {
   display: flex;
@@ -54,10 +72,6 @@ section .btns button:hover {
   color: #fe6760;
   background: #fff;
   cursor: pointer;
-}
-
-a {
-  text-decoration: none;
 }
 
 .App-logo {
@@ -112,7 +126,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 40%;
+  width: 100%;
 }
 form label,
 form input,
@@ -127,12 +141,28 @@ form label span {
   display: block;
 }
 form input,
-form textarea {
-  border: 2px solid #999;
+form textarea,
+textarea::placeholder {
+  border: 2px solid #fff;
   border-radius: 5px;
   padding: 8px 10px;
+  margin: 5px auto 20px;
+  font-size: 21px;
+  transition: 0.3s ease all;
 }
 
+form input:focus,
+form textarea:focus {
+  border: 2px solid #999;
+}
+textarea[name="title"]::placeholder,
+textarea[name="title"] {
+  font-size: 34px;
+  font-weight: bold;
+}
+form textarea {
+  resize: none;
+}
 form button {
   background: #9ad787;
   border: 2px solid #9ad787;
@@ -163,7 +193,4 @@ form button:hover {
   height: 100px;
   margin: 20px;
   overflow: hidden;
-}
-.imgs-gallery .pic-image img {
-  max-width: 100%;
 }

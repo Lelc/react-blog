@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
+import TextareaAutosize from "react-textarea-autosize";
 import api from "../../services/api";
 import axios from "axios";
 
@@ -19,19 +20,17 @@ const EditPost = () => {
 
   const { postId } = useParams();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    image: "",
-  });
+  const [postImage, setPostImage] = useState<string>("");
+  const [postTitle, setPostTitle] = useState<string>("");
   const [postContent, setPostContent] = useState<string>("");
   const [chooseImages, setChooseImages] = useState<string>("");
   const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
     api.get(`posts/${postId}`).then((response) => {
-      setFormData({ title: response.data.title, image: response.data.image });
+      setPostImage(response.data.image);
+      setPostTitle(response.data.title);
       setPostContent(response.data.content);
-      console.log(response.data.content);
     });
   }, [postId]);
 
@@ -46,20 +45,15 @@ const EditPost = () => {
       });
   }, [chooseImages]);
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-
-    setFormData({ ...formData, [name]: value });
-  }
-
   function handleImagePic(src: string) {
-    setFormData({ ...formData, image: src });
+    setPostImage(src);
   }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    const { title, image } = formData;
+    const image = postImage;
+    const title = postTitle;
     const content = postContent;
 
     const data = {
@@ -80,28 +74,16 @@ const EditPost = () => {
       <Header />
       <div className="container">
         <h1>Edit Post</h1>
-        <img src={formData.image} />
         <form onSubmit={handleSubmit}>
-          <label htmlFor="title">
-            <span>Title:</span>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleInputChange}
-            ></input>
-          </label>
-          <label htmlFor="image">
-            <span>Image:</span>
-            <input
-              type="text"
-              name="image"
-              value={chooseImages}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                setChooseImages(e.target.value)
-              }
-            ></input>
-          </label>
+          <input
+            type="text"
+            name="image"
+            value={chooseImages}
+            placeholder="Change Image"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+              setChooseImages(e.target.value)
+            }
+          ></input>
           <div className="imgs-gallery">
             {images.map((image) => (
               <div
@@ -109,24 +91,36 @@ const EditPost = () => {
                 key={image.id}
                 onClick={() => handleImagePic(image.urls.regular)}
               >
-                <img src={image.urls.regular} />
+                <img src={image.urls.regular} alt="" />
               </div>
             ))}
           </div>
           <input
             type="hidden"
             name="image"
-            onChange={handleInputChange}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+              setPostImage(e.target.value)
+            }
           ></input>
-          <label htmlFor="message">
-            <span>Content:</span>
-            <textarea
-              value={postContent}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
-                setPostContent(e.target.value)
-              }
-            />
-          </label>
+          <img src={postImage} alt="" />
+          <TextareaAutosize
+            name="title"
+            value={postTitle}
+            placeholder="Title"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
+              setPostTitle(e.target.value)
+            }
+            autoFocus
+          />
+          <TextareaAutosize
+            value={postContent}
+            placeholder="Content"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
+              setPostContent(e.target.value)
+            }
+            minRows={5}
+            autoFocus
+          />
           <button>Edit</button>
         </form>
       </div>
