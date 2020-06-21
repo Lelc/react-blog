@@ -184,13 +184,20 @@ form button:hover {
 .imgs-gallery {
   display: flex;
   flex-wrap: wrap;
-  width: 40vw;
   align-items: center;
   justify-content: center;
 }
 .imgs-gallery .pic-image {
   width: 100px;
-  height: 100px;
-  margin: 20px;
+  margin: 17px;
+  border-radius: 5px;
+  padding: 4px;
   overflow: hidden;
+}
+.imgs-gallery .pic-image.picked {
+  border: 4px solid #52b931;
+  padding: 0;
+}
+.imgs-gallery .pic-image img {
+  display: block;
 }

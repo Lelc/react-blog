@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 import TextareaAutosize from "react-textarea-autosize";
@@ -24,6 +24,8 @@ const EditPost = () => {
   const [postTitle, setPostTitle] = useState<string>("");
   const [postContent, setPostContent] = useState<string>("");
   const [chooseImages, setChooseImages] = useState<string>("");
+  const [chosenImage, setChosenImage] = useState("");
+  const [loadMore, setLoadMore] = useState(1);
   const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
@@ -40,13 +42,30 @@ const EditPost = () => {
         `https://api.unsplash.com/search/photos/?page=1&orientation=landscape&query=${chooseImages}&client_id=${apikey.unsplash}`
       )
       .then((response) => {
-        console.log(response.data.results);
+        console.log(response.data);
         setImages(response.data.results);
       });
   }, [chooseImages]);
 
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.unsplash.com/search/photos/?page=${loadMore}&orientation=landscape&query=${chooseImages}&client_id=${apikey.unsplash}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        setImages(images.concat(response.data.results));
+      });
+  }, [loadMore]);
+
   function handleImagePic(src: string) {
+    setChosenImage(src);
     setPostImage(src);
+  }
+
+  function handleLoadMore(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    setLoadMore(loadMore + 1);
   }
 
   async function handleSubmit(event: FormEvent) {
@@ -87,7 +106,9 @@ const EditPost = () => {
           <div className="imgs-gallery">
             {images.map((image) => (
               <div
-                className="pic-image"
+                className={`pic-image ${
+                  image.urls.regular === chosenImage ? "picked" : ""
+                }`}
                 key={image.id}
                 onClick={() => handleImagePic(image.urls.regular)}
               >
@@ -102,6 +123,9 @@ const EditPost = () => {
               setPostImage(e.target.value)
             }
           ></input>
+          <a href="#" onClick={handleLoadMore}>
+            Load More
+          </a>
           <img src={postImage} alt="" />
           <TextareaAutosize
             name="title"

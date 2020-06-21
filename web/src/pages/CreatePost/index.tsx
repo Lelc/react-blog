@@ -21,6 +21,7 @@ const CreatePost = () => {
   const [postTitle, setPostTitle] = useState<string>("");
   const [postContent, setPostContent] = useState<string>("");
   const [chooseImages, setChooseImages] = useState<string>("");
+  const [chosenImage, setChosenImage] = useState("");
   const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ const CreatePost = () => {
   }, [chooseImages]);
 
   function handleImagePic(src: string) {
+    setChosenImage(src);
     setPostImage(src);
   }
 
@@ -76,7 +78,9 @@ const CreatePost = () => {
           <div className="imgs-gallery">
             {images.map((image) => (
               <div
-                className="pic-image"
+                className={`pic-image ${
+                  image.urls.regular === chosenImage ? "picked" : ""
+                }`}
                 key={image.id}
                 onClick={() => handleImagePic(image.urls.regular)}
               >

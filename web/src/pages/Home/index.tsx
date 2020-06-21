@@ -31,17 +31,20 @@ const Home = () => {
     <>
       <Header />
       <div className="container">
-        {posts.map((post) => (
-          <section key={post.id}>
-            <Post key={post.id} post={post} />
-            <div className="btns">
-              <Link to={`/edit-post/${post.id}`}>Edit</Link>
-              <button onClick={() => handleButtonDelete(post.id)}>
-                Delete
-              </button>
-            </div>
-          </section>
-        ))}
+        {posts
+          .slice(0)
+          .reverse()
+          .map((post) => (
+            <section key={post.id}>
+              <Post key={post.id} post={post} />
+              <div className="btns">
+                <Link to={`/edit-post/${post.id}`}>Edit</Link>
+                <button onClick={() => handleButtonDelete(post.id)}>
+                  Delete
+                </button>
+              </div>
+            </section>
+          ))}
       </div>
     </>
   );
