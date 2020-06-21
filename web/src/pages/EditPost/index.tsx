@@ -20,12 +20,13 @@ const EditPost = () => {
 
   const { postId } = useParams();
 
-  const [postImage, setPostImage] = useState<string>("");
-  const [postTitle, setPostTitle] = useState<string>("");
-  const [postContent, setPostContent] = useState<string>("");
-  const [chooseImages, setChooseImages] = useState<string>("");
+  const [postImage, setPostImage] = useState("");
+  const [postTitle, setPostTitle] = useState("");
+  const [postContent, setPostContent] = useState("");
+  const [chooseImages, setChooseImages] = useState("");
   const [chosenImage, setChosenImage] = useState("");
   const [loadMore, setLoadMore] = useState(1);
+  const [loadMoreLimit, setloadMoreLimit] = useState(0);
   const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const EditPost = () => {
       )
       .then((response) => {
         console.log(response.data);
+        setloadMoreLimit(response.data.total_pages);
         setImages(response.data.results);
       });
   }, [chooseImages]);
@@ -65,7 +67,7 @@ const EditPost = () => {
 
   function handleLoadMore(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
-    setLoadMore(loadMore + 1);
+    loadMoreLimit > loadMore && setLoadMore(loadMore + 1);
   }
 
   async function handleSubmit(event: FormEvent) {
@@ -123,9 +125,11 @@ const EditPost = () => {
               setPostImage(e.target.value)
             }
           ></input>
-          <a href="#" onClick={handleLoadMore}>
-            Load More
-          </a>
+          {loadMoreLimit > loadMore && (
+            <a className="load-more" href="#" onClick={handleLoadMore}>
+              Load More
+            </a>
+          )}
           <img src={postImage} alt="" />
           <TextareaAutosize
             name="title"

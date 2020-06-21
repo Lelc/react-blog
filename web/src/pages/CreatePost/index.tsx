@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 import api from "../../services/api";
@@ -22,6 +22,8 @@ const CreatePost = () => {
   const [postContent, setPostContent] = useState<string>("");
   const [chooseImages, setChooseImages] = useState<string>("");
   const [chosenImage, setChosenImage] = useState("");
+  const [loadMore, setLoadMore] = useState(1);
+  const [loadMoreLimit, setloadMoreLimit] = useState(0);
   const [images, setImages] = useState<Image[]>([]);
 
   useEffect(() => {
@@ -31,13 +33,30 @@ const CreatePost = () => {
       )
       .then((response) => {
         console.log(response.data.results);
+        setloadMoreLimit(response.data.total_pages);
         setImages(response.data.results);
       });
   }, [chooseImages]);
 
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.unsplash.com/search/photos/?page=${loadMore}&orientation=landscape&query=${chooseImages}&client_id=${apikey.unsplash}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        setImages(images.concat(response.data.results));
+      });
+  }, [loadMore]);
+
   function handleImagePic(src: string) {
     setChosenImage(src);
     setPostImage(src);
+  }
+
+  function handleLoadMore(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    loadMoreLimit > loadMore && setLoadMore(loadMore + 1);
   }
 
   async function handleSubmit(event: FormEvent) {
@@ -95,6 +114,11 @@ const CreatePost = () => {
               setPostImage(e.target.value)
             }
           ></input>
+          {loadMoreLimit > loadMore && (
+            <a className="load-more" href="#" onClick={handleLoadMore}>
+              Load More
+            </a>
+          )}
           <img src={postImage} alt="" />
           <TextareaAutosize
             name="title"

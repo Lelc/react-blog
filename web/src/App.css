@@ -201,3 +201,20 @@ form button:hover {
 .imgs-gallery .pic-image img {
   display: block;
 }
+.load-more {
+  border: 2px solid #000;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  text-align: center;
+  align-self: center;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  transition: 0.3s ease all;
+}
+
+.load-more:hover {
+  color: #fff;
+  background: #000;
+}
