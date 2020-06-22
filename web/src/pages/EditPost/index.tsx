@@ -23,6 +23,7 @@ const EditPost = () => {
   const [postImage, setPostImage] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [chooseImages, setChooseImages] = useState("");
   const [chosenImage, setChosenImage] = useState("");
   const [loadMore, setLoadMore] = useState(1);
@@ -60,6 +61,12 @@ const EditPost = () => {
       });
   }, [loadMore]);
 
+  function handleSearch(event: FormEvent) {
+    event.preventDefault();
+
+    setChooseImages(searchQuery);
+  }
+
   function handleImagePic(src: string) {
     setChosenImage(src);
     setPostImage(src);
@@ -95,16 +102,19 @@ const EditPost = () => {
       <Header />
       <div className="container">
         <h1>Edit Post</h1>
-        <form onSubmit={handleSubmit}>
+
+        <form className="search-form" onSubmit={handleSearch}>
           <input
             type="text"
             name="image"
-            value={chooseImages}
-            placeholder="Change Image"
+            placeholder="Change image"
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-              setChooseImages(e.target.value)
+              setSearchQuery(e.target.value)
             }
           ></input>
+          <button>Search</button>
+        </form>
+        <form onSubmit={handleSubmit}>
           <div className="imgs-gallery">
             {images.map((image) => (
               <div
@@ -118,13 +128,6 @@ const EditPost = () => {
               </div>
             ))}
           </div>
-          <input
-            type="hidden"
-            name="image"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-              setPostImage(e.target.value)
-            }
-          ></input>
           {loadMoreLimit > loadMore && (
             <a className="load-more" href="#" onClick={handleLoadMore}>
               Load More
