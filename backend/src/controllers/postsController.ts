@@ -11,6 +11,8 @@ class PostsController {
         title: post.title,
         image: post.image,
         content: post.content,
+        created_at: post.created_at,
+        updated_at: post.updated_at,
       };
     });
 
@@ -46,11 +48,16 @@ class PostsController {
   async edit(request: Request, response: Response) {
     const { id } = request.params;
     const { title, image, content } = request.body;
+    const editTime = new Date()
+      .toISOString()
+      .replace(/T/, " ")
+      .replace(/\..+/, "");
 
     const post = {
       title,
       image,
       content,
+      updated_at: editTime,
     };
 
     await knex("posts").where("id", id).update(post);

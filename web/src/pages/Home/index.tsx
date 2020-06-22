@@ -10,13 +10,18 @@ interface Post {
   title: string;
   image: string;
   content: string;
+  created_at: string;
+  updated_at: string;
 }
 
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    api.get("posts").then((response) => setPosts(response.data));
+    api.get("posts").then((response) => {
+      console.log(response.data);
+      setPosts(response.data);
+    });
   }, []);
 
   async function handleButtonDelete(id: string) {

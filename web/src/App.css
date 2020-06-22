@@ -38,6 +38,10 @@ section h3 {
 section img {
   max-width: 100%;
 }
+section .date span {
+  font-size: 12px;
+  margin-right: 10px;
+}
 section div {
   white-space: pre-line;
   font-size: 21px;

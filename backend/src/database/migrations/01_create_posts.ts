@@ -6,6 +6,7 @@ export async function up(knex: Knex) {
     table.string("title").notNullable();
     table.string("image").notNullable();
     table.string("content").notNullable();
+    table.timestamps(false, true);
   });
 }
 
